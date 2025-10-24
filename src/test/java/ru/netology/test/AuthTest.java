@@ -26,7 +26,7 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("h2").shouldHave(Condition.text("Личный кабинет"));
+        $("h2").shouldHave(Condition.text("Личный кабинет"), Condition.visible);
     }
 
     @Test
@@ -36,8 +36,9 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(notRegisteredUser.getLogin());
         $("[data-test-id=password] input").setValue(notRegisteredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]")
-                .shouldHave(Condition.text("Ошибка"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Ошибка"), Condition.text("Неверно указан логин или пароль"));
     }
 
     @Test
@@ -47,8 +48,9 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(blockedUser.getLogin());
         $("[data-test-id=password] input").setValue(blockedUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]")
-                .shouldHave(Condition.text("Пользователь заблокирован"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Ошибка"), Condition.text("Пользователь заблокирован"));
     }
 
     @Test
@@ -59,8 +61,9 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(wrongLogin);
         $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]")
-                .shouldHave(Condition.text("Ошибка"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Ошибка"), Condition.text("Неверно указан логин или пароль"));
     }
 
     @Test
@@ -71,7 +74,8 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongPassword);
         $("[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]")
-                .shouldHave(Condition.text("Ошибка"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Ошибка"), Condition.text("Неверно указан логин или пароль"));
     }
 }
